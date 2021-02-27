@@ -5,6 +5,8 @@
 #ifndef AL_LIST_GNSTACK_H
 #define AL_LIST_GNSTACK_H
 #include <vector>
+#include <string>
+#include <iostream>
 
 namespace Parrots {
     template<class T, int capacity = 10>
@@ -40,12 +42,19 @@ namespace Parrots {
             data.push_back(e1);
         }
 
+        void visualize(){
+            for (auto a:data) std::cout<<a<<" ";
+            std::cout<<"\n";
+        }
+
     private:
         std::vector<T> data;
 
 
     };
 
+    void remove_char_from_string(std::string&, char);
+    void add_largenumbers(std::string&, std::string&);
 }
 
 #endif //AL_LIST_GNSTACK_H
