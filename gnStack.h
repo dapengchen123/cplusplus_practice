@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 namespace Parrots {
     template<class T, int capacity = 10>
@@ -46,6 +47,12 @@ namespace Parrots {
             for (auto a:data) std::cout<<a<<" ";
             std::cout<<"\n";
         }
+
+        void reverse(){
+           std::reverse(data.begin(), data.end());
+        }
+
+
 
     private:
         std::vector<T> data;

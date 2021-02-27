@@ -36,10 +36,11 @@ namespace Parrots {
             std::cout<<"residual:"<<residual<<std::endl;
             value = sum/10;
             std::cout<<"value:"<<value<<std::endl;
-
-            std::string s = std::to_string(residual);
-            sumstack.push(s.c_str());
+            char sc = (char)(residual+ '0');
+            sumstack.push(sc);
         }
+        sumstack.visualize();
+        sumstack.reverse();
         sumstack.visualize();
 
     }

@@ -43,5 +43,21 @@ cout<<s.c_str()<<endl; //1000
 cout<<s.size()<<endl;  //长度为4
 ```
 
-### vector 进行可视化
+### int 与 char 之前的相互转化
+
+char 转化成 int
+```c++
+int i3 = c - '0';
+```
+int 转化成 char
+```c++
+char c = '0'+ i; 
+```
+
+### stack 进行可视化
+```c++
+
+
+```
+
 
