@@ -18,7 +18,8 @@ int main() {
     //Parrots::add_largenumbers()
     Parrots::add_largenumbers(note1, note2);
 
-
+    std::vector<int> data = {1,2,3,4,7};
+    for(auto a:data) std::cout<<a<<" ";
 
     return 0;
 }

@@ -56,8 +56,12 @@ char c = '0'+ i;
 
 ### stack 进行可视化
 ```c++
+#include<algorithm>
+#include<vector>
 
-
+//data is a vector data structure. 
+std::vector<int> data = {1,2,3,4,7};
+std::reverse(data.begin(), data.end());
 ```
 
 
