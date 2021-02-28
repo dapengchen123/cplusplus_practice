@@ -21,3 +21,8 @@ queue 为了最大限度的利用空间，一般采用circular array的形式。
 (2) 一般情况下，first 往后移动一个位置
 
 (3) 当last和first重合的时候，只剩下了最后一个元素，在交出元素以后， last和first重置到-1.
+
+
+### Bank One Example 
+英文扫盲： clerk 做文书工作的人
+
