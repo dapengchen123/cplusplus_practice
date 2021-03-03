@@ -26,3 +26,4 @@ queue 为了最大限度的利用空间，一般采用circular array的形式。
 ### Bank One Example 
 英文扫盲： clerk 做文书工作的人
 
+### 银行系统排队的问题
