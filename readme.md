@@ -27,3 +27,13 @@ queue 为了最大限度的利用空间，一般采用circular array的形式。
 英文扫盲： clerk 做文书工作的人
 
 ### 银行系统排队的问题
+![alt text](imgs/bank_queue.png "images")
+
+
+### 实现一个priority queue  
+
+https://www.geeksforgeeks.org/priority-queue-using-linked-list/
+
+### 如何成长成一名架构师
+
+https://www.zhihu.com/question/40520339/answer/99790593
