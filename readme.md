@@ -30,6 +30,25 @@ queue 为了最大限度的利用空间，一般采用circular array的形式。
 ![alt text](imgs/bank_queue.png "images")
 
 
+（1）首先要产生在某一次模拟中足量的arrive event进行处理， 在还存在event的时候
+   1.1  arrive event    
+   1.2  departure event
+   1.3
+#### 实现细节
+（1） 栈和队列都属于一种特殊的数据结构，只能通过访问顶层数据并不断剔除数据的方法进行全部访问，因此没有直接的迭代器
+
+（2） 友元进行输入输出
+```c++
+ostream& operator<<(ostream& _cout, Date& date)
+{
+	_cout << date._year << "-" << date._month << "-" << date._day;
+	return _cout;
+}
+
+```
+
+(3)
+
 ### 实现一个priority queue  
 
 https://www.geeksforgeeks.org/priority-queue-using-linked-list/

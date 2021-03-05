@@ -7,20 +7,20 @@
 
 #include "random.h"
 
-class Customer{
+namespace Parrots {
+    class Customer {
 
-public:
-    Customer():arrive_time(0),
-    duration(Random::uniform(RANDOM_DURATION)),
-    next(nullptr){}
+    public:
+        Customer() : _arrive_time(0),
+                     _duration(Random::uniform(RANDOM_DURATION)), _left_time(0) {}
 
-    Customer(int arrive_time):arrive_time(arrive_time),
-    duration(Random::uniform(RANDOM_DURATION)),
-    next(nullptr){}
+        Customer(int arrive_time) : _arrive_time(arrive_time),
+                                    _duration(Random::uniform(RANDOM_DURATION)), _left_time(0) {}
 
-private:
-    int arrive_time;
-    int duration;
-    Customer* next;
-};
+    private:
+        int _arrive_time;
+        int _duration;
+        int _left_time;
+    };
+}
 #endif //AL_LIST_CUSTOMER_H

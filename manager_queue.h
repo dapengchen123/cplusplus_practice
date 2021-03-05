@@ -17,8 +17,134 @@
 #define INIT_ARRIVIED_EVENT_NUM 5
 
 namespace Parrots{
-    class Manager
 
+    class Manager{
+    public:
+         Manager(int total_serve_time, int service_num)
+            : _total_serve_time(total_serve_time),
+              _service_num(service_num),
+              _customer_stay_time(0),
+              _total_served_customer_num(0){}
+
+        void simulation(int simulation_num);
+        void visualize_events();
+        void visualize_customer();
+
+    private:
+        // 这是目标要算的量
+        int _total_serve_time;
+        int _service_num;
+        int _customer_stay_time;
+        int _total_served_customer_num;
+        int _current_time;
+        double _avg_customers;
+        double _avg_stay_time;
+
+        // manager 中的主要数据结构
+        // 1: event queue  2: customer
+
+        std::priority_queue<Event, std::vector<Event>, std::greater<>> _event_queue;
+        std::queue<Customer> _customer_queue;
+
+        Parrots::Services* _services;
+        const Parrots::Event* _current_event;
+
+        // manager 中的主要函数
+
+        void init();
+        void run();
+        void end();
+
+        // manager 中的辅助函数
+        void generate_arrived_event();
+        void customer_arrive();
+        void customer_depature();
+
+
+
+
+
+    };
+    void Manager::init() {
+        // init the service
+        _services = new Services[_service_num];
+
+        // generate the arrive event
+
+        _current_time = 0;
+        while (_current_time < INIT_ARRIVIED_EVENT_NUM) {
+            generate_arrived_event();
+        }
+    }
+
+    void Manager::run(){
+
+        //
+        while(!_event_queue.empty()){
+            _current_event = &(_event_queue.top());
+            if(_current_event->_occur_time >= _total_serve_time)
+                break;
+
+            if (_current_event->_event_type == EventType::ARRIVED){
+
+            }
+            else if (_current_event->_event_type == EventType::DEPARTURE){
+
+            }
+
+
+        }
+    }
+
+
+    void Manager::simulation(int simulation_num) {
+
+        // 循环这个过程
+        for(int i=0; i<simulation_num; i++){
+            std::cout<<"the "<<i<<"th simulation:\n";
+            init();
+            visualize_events();
+            run();
+        }
+
+    }
+
+
+    void Manager::generate_arrived_event() {
+        Parrots::Event event;
+        int customer_per_minute = Random::uniform(RANDOM_PER_MINUTE);
+        while (customer_per_minute > 0){
+            std::cout<<"current time:"<<_current_time<<"\n";
+            event = Parrots::Event(_current_time);
+            _event_queue.push(event);
+            --customer_per_minute;
+        }
+        ++_current_time;
+    }
+
+    void Manager::visualize_events() {
+        int event_queue_size = _event_queue.size();
+        std::priority_queue<Event, std::vector<Event>, std::greater<>> event_queue_tmp;
+        for(int i=0; i< event_queue_size; i++){
+            std::cout << _event_queue.top() << std::endl;
+            event_queue_tmp.push(_event_queue.top());
+            _event_queue.pop();
+        }
+        _event_queue = event_queue_tmp;
+        std::cout<<&_event_queue<<"\n";
+    }
+
+    void Manager::visualize_customer() {
+
+    }
+
+    void Manager::customer_arrive() {
+
+    }
+
+    void Manager::customer_depature() {
+
+    }
 
 }
 
