@@ -17,7 +17,6 @@ namespace Parrots {
         Customer(int arrive_time) : _arrive_time(arrive_time),
                                     _duration(Random::uniform(RANDOM_DURATION)), _left_time(0) {}
 
-    private:
         int _arrive_time;
         int _duration;
         int _left_time;

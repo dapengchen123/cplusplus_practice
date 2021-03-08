@@ -5,21 +5,49 @@
 #ifndef AL_LIST_SERVICE_H
 #define AL_LIST_SERVICE_H
 
+
 #include "customer.h"
+#include <iostream>
 namespace Parrots {
-    enum class ServiceStatus {
+    enum ServiceStatus {
         BUSY,
         IDLE
     };
 
     class Services {
     public:
-        Services() : _service_status(ServiceStatus::IDLE), _service_start_time(0){}
+        Services() : _service_status(ServiceStatus::IDLE), _service_start_time(-1){}
+        void serve_customer(Customer& customer);
+        void set_service_start_time(int sst);
+        void set_busy();
+        void set_idle();
+        bool is_idle();
+
+        friend std::ostream& operator<<(std::ostream& , const Services& );
     private:
         Customer _customer;
         ServiceStatus _service_status;
         int _service_start_time;
     };
+
+   void Services::serve_customer(Customer& customer) {_customer = customer;}
+
+   void Services::set_busy() {_service_status = ServiceStatus::BUSY; }
+
+   void Services::set_idle() {_service_status = ServiceStatus::IDLE; }
+
+   void Services::set_service_start_time(int sst) { _service_start_time = sst;}
+
+   bool Services::is_idle() { return _service_status == ServiceStatus::IDLE; }
+
+   inline std::ostream& operator<<(std::ostream& _cout, const Services& _service){
+        _cout << "service status: " << _service._service_status << "service start_time:" \
+        <<_service._service_start_time<<"\n";
+        return _cout;
+   }
+
+
+
 }
 #endif
 

@@ -29,6 +29,8 @@ namespace Parrots{
         void simulation(int simulation_num);
         void visualize_events();
         void visualize_customer();
+        void visualize_service();
+
 
     private:
         // 这是目标要算的量
@@ -57,11 +59,10 @@ namespace Parrots{
 
         // manager 中的辅助函数
         void generate_arrived_event();
+        void generate_depature_event();
         void customer_arrive();
         void customer_depature();
-
-
-
+        int get_idle_service();
 
 
     };
@@ -86,10 +87,10 @@ namespace Parrots{
                 break;
 
             if (_current_event->_event_type == EventType::ARRIVED){
-
+                customer_arrive();
             }
             else if (_current_event->_event_type == EventType::DEPARTURE){
-
+                customer_depature();
             }
 
 
@@ -122,6 +123,20 @@ namespace Parrots{
         ++_current_time;
     }
 
+    void Manager::generate_depature_event(int idle_num, int current_time) {
+        // set the service
+        _services[idle_num].set_service_start_time(current_time);
+        _services[idle_num].set_busy();
+        _services[idle_num].serve_customer(_customer_queue.top());
+        _customer_queue.pop();
+
+
+
+        // generate the depature event
+
+
+    }
+
     void Manager::visualize_events() {
         int event_queue_size = _event_queue.size();
         std::priority_queue<Event, std::vector<Event>, std::greater<>> event_queue_tmp;
@@ -134,13 +149,40 @@ namespace Parrots{
         std::cout<<&_event_queue<<"\n";
     }
 
+    int Manager::get_idle_service() {
+        for (int i=0;i< _service_num; i++) {
+            if (_services[i].is_idle())
+                return i;
+        }
+        return -1;
+    }
+
+
     void Manager::visualize_customer() {
 
     }
 
+    void Manager::visualize_service(){
+
+        for(int i=0; i<_service_num;i++)
+            std::cout<<_services[i]<<std::endl;
+    }
+
     void Manager::customer_arrive() {
 
+        int current_time = _current_event->_occur_time;
+        Parrots::Customer customer(current_time);
+        _customer_queue.push(customer);
+        _event_queue.pop();
+        visualize_service();
+        int idle_num = get_idle_service();
+        if (idle_num != -1){
+
+        }
+
     }
+
+
 
     void Manager::customer_depature() {
 
