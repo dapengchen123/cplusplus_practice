@@ -59,7 +59,7 @@ namespace Parrots{
 
         // manager 中的辅助函数
         void generate_arrived_event();
-        void generate_depature_event();
+        void generate_depature_event(int, int);
         void customer_arrive();
         void customer_depature();
         int get_idle_service();
@@ -90,12 +90,40 @@ namespace Parrots{
                 customer_arrive();
             }
             else if (_current_event->_event_type == EventType::DEPARTURE){
+
                 customer_depature();
             }
 
 
         }
     }
+
+
+
+    void Manager::end(){
+
+        // 清仓
+        for(int i=0; i<_service_num;i++){
+            if(!_services[i].is_idle()){
+
+                std::cout << "the services:" << i <<"is working\n";
+                int service_start_time = _services[i].get_service_start_time();
+                int arrive_time = _services[i].get_customer_arrivetime();
+                int duration = _services[i].get_customer_duration();
+
+                _customer_stay_time += service_start_time + duration -arrive_time;
+                ++_total_served_customer_num;
+            }
+        }
+
+        // 重置
+        while(!_customer_queue.empty())
+            _customer_queue.pop();
+        while(!_event_queue.empty())
+            _event_queue.pop();
+        delete [] _services;
+    }
+
 
 
     void Manager::simulation(int simulation_num) {
@@ -106,6 +134,7 @@ namespace Parrots{
             init();
             visualize_events();
             run();
+            end();
         }
 
     }
@@ -125,15 +154,16 @@ namespace Parrots{
 
     void Manager::generate_depature_event(int idle_num, int current_time) {
         // set the service
+        _services[idle_num].serve_customer(_customer_queue.front());
         _services[idle_num].set_service_start_time(current_time);
         _services[idle_num].set_busy();
-        _services[idle_num].serve_customer(_customer_queue.top());
         _customer_queue.pop();
 
-
-
         // generate the depature event
-
+        int duration = _services[idle_num].get_customer_duration();
+        std::cout << "duration :" << duration << "\n";
+        Event event(current_time+duration, idle_num, Parrots::EventType::DEPARTURE);
+        _event_queue.push(event);
 
     }
 
@@ -171,13 +201,15 @@ namespace Parrots{
     void Manager::customer_arrive() {
 
         int current_time = _current_event->_occur_time;
+        std::cout << "the customer ："  << current_time << "arrives \n";
+        _current_time = current_time;
         Parrots::Customer customer(current_time);
         _customer_queue.push(customer);
         _event_queue.pop();
         visualize_service();
         int idle_num = get_idle_service();
         if (idle_num != -1){
-
+            generate_depature_event(idle_num, current_time);
         }
 
     }
@@ -185,8 +217,26 @@ namespace Parrots{
 
 
     void Manager::customer_depature() {
+        int current_time = _current_event->_occur_time;
+        int service_index = _current_event->_service_index;
+        std::cout << "the customer : " << _current_time << "leaves \n";
+        _current_time = current_time;
+        _customer_stay_time += current_time - _services[service_index].get_customer_arrivetime();
+
+        ++_total_served_customer_num;
+
+        _services[service_index].set_idle();
+
+        _event_queue.pop();
+
+        if(_customer_queue.size() > 0){
+            service_index = get_idle_service();
+            generate_depature_event(service_index, current_time);
+        }
 
     }
+
+
 
 }
 

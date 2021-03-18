@@ -19,11 +19,14 @@ namespace Parrots {
         Services() : _service_status(ServiceStatus::IDLE), _service_start_time(-1){}
         void serve_customer(Customer& customer);
         void set_service_start_time(int sst);
+        int get_customer_duration();
+        int get_customer_arrivetime();
+        int get_service_start_time();
         void set_busy();
         void set_idle();
         bool is_idle();
-
         friend std::ostream& operator<<(std::ostream& , const Services& );
+
     private:
         Customer _customer;
         ServiceStatus _service_status;
@@ -38,7 +41,14 @@ namespace Parrots {
 
    void Services::set_service_start_time(int sst) { _service_start_time = sst;}
 
+   int Services::get_service_start_time(){ return _service_start_time; }
+
    bool Services::is_idle() { return _service_status == ServiceStatus::IDLE; }
+
+   int Services::get_customer_duration(){return _customer.get_duration(); }
+
+   int Services::get_customer_arrivetime() {return _customer.get_arrive_time(); }
+
 
    inline std::ostream& operator<<(std::ostream& _cout, const Services& _service){
         _cout << "service status: " << _service._service_status << "service start_time:" \
