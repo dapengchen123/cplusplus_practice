@@ -1,17 +1,22 @@
 #include <iostream>
-#include <array>
-#include <cstdlib>
-#include <ctime>
-#include "manager_queue.h"
+#include "priority.h"
 
 
 int main() {
-    int total_serve_time = 20;
-    int service_num = 5;
-    Parrots::Manager manager(20,5);
-    manager.simulation(1);
 
+    Parrots::Priority_queue pq;
+    pq.push(1,1);
+    pq.push(3,3);
+    pq.push(47,47);
+    pq.push(6,6);
+    pq.push(17,17);
+    pq.push(10,10);
+    pq.push(27,27);
+    pq.push(57,57);
 
+    std::cout<<"the lowest number is "<<pq.peek()<<"\n";
+    std::cout<<"visualization the whole nodes \n";
+    pq.visualization();
 
     return 0;
 }
