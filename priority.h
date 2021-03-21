@@ -4,7 +4,7 @@
 
 #ifndef AL_LIST_PRIORITY_H
 #define AL_LIST_PRIORITY_H
-
+#include<iostream>
 namespace Parrots{
     class Node{
 
@@ -71,9 +71,9 @@ namespace Parrots{
             }else {
                 //Traverse the list and find a posiiton to insert new node
                 Node *start = head;
-                while (start->next != nullptr && start->next->priority < p) {
+                while (start->next != nullptr && start->next->priority < p)
                     start = start->next;
-                }
+
                 // Either at the ends of the lists or the requried position
                 temp->next = start->next;
                 start->next = temp;

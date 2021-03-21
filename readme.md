@@ -56,3 +56,56 @@ https://www.geeksforgeeks.org/priority-queue-using-linked-list/
 ### 如何成长成一名架构师
 
 https://www.zhihu.com/question/40520339/answer/99790593
+
+### 如何使用 pybind
+https://www.jianshu.com/p/9619f8f02891
+
+在程序中用pybind11，讲一个priority queue的实现转移至python中
+
+(1) 首先切换到conda python3的环境中
+
+(2）安装 pybind11的c++库， 直接从源码中进行build，并且通过make install 进行安装
+
+(3) 在CMakeLists 中添加 
+···
+find_package(pybind11 CONFIG)
+···
+
+这里和传统的C++程序不同不存在如main函数一样的接口函数，倒是类似于C++中的库函数
+在cmake中
+
+pybind11_add_module(prority_queue priority.cpp )
+
+这里prority_queue 是库的名称--编译成功以后， 在python 中import prority_queue进行使用
+   priority.cpp 是相关的源码以及定义的pybind11接口
+
+(4) 实例代码
+
+### 函数的代码
+```c++
+#include <pybind11/pybind11.h>
+
+int add(int i, int j) {
+    return i + j;
+}
+PYBIND11_MODULE(example, m){
+    m.doc() = "pybind11 example plugin";
+    m.def("add", &add, "A function which add two number");
+}
+```
+### 类的代码
+```c++
+/*
+                省略 priority queue的源码
+ */
+PYBIND11_MODULE(prority_queue, m) {
+    pybind11::class_<Priority_queue>(m, "Priority_queue")
+    .def(pybind11::init<>())
+    .def("push", &Priority_queue::push)
+    .def("pop", &Priority_queue::pop)
+    .def("visulization",&Priority_queue::visualization);
+}
+
+```
+更复杂的python继承C++功能的规则可以参见
+https://pybind11.readthedocs.io/en/stable/advanced/classes.html
