@@ -10,6 +10,4 @@ int main(){
     std::string s3 = "MONEY";
 
 
-
-
 }
